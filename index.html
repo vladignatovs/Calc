@@ -4,68 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
     <title>Calculator</title>
 </head>
 <body>
     <div id="main_page">
         <div id="screen">
-            <p>FILLER TEXT</p>
+            <p id="textRow"></p>
+            <p id="resultRow"></p>
         </div>
         <div id="buttons">
             <ul>
                 <!-- eachrow contains 4 buttons -->
                 <li>
-                    <input type="button" value="1">
+                    <input type="button" value="(" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="2">
+                    <input type="button" value=")" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="3">
+                    <input type="button" value="CE" onclick="clearEntry()">
                 </li>
                 <li>
-                    <input type="button" value="+" id="big-bttn">
+                    <input type="button" value="AC" onclick="allClear()">
                 </li>
 
 
                 <li>
-                    <input type="button" value="4">
+                    <input type="button" value="1" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="5">
+                    <input type="button" value="2" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="6">
+                    <input type="button" value="3" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="-" id="big-bttn">
+                    <input type="button" value="+" id="sign-bttn" onclick="addValue(this)">
+                </li>
+
+
+                <li>
+                    <input type="button" value="4" onclick="addValue(this)">
+                </li>
+                <li>
+                    <input type="button" value="5" onclick="addValue(this)">
+                </li>
+                <li>
+                    <input type="button" value="6" onclick="addValue(this)">
+                </li>
+                <li>
+                    <input type="button" value="-" id="sign-bttn" onclick="addValue(this)">
                 </li>
 
                 
                 <li>
-                    <input type="button" value="7">
+                    <input type="button" value="7" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="8">
+                    <input type="button" value="8" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="9">
+                    <input type="button" value="9" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="*" id="big-bttn">
+                    <input type="button" value="*" id="sign-bttn" onclick="addValue(this)">
                 </li>
 
                 <li>
-                    <input type="button" value="0">
+                    <input type="button" value="0" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="CE" id="big-bttn">
+                    <input type="button" value="." id="sign-bttn" onclick="addValue(this)">
                 </li>
                 <li>
-                    <input type="button" value="AC" id="big-bttn">
+                    <input type="button" value="=" id="exec-bttn" onclick="execute()">
                 </li>
                 <li>
-                    <input type="button" value="/" id="big-bttn">
+                    <input type="button" value="/" id="sign-bttn" onclick="addValue(this)">
                 </li>
             </ul>
         </div>

@@ -1,8 +1,22 @@
 * {
     margin: 0;
     padding: 0;
+
+    transition-duration: .5s;
+
+    color: white;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+
 }
 
+html {
+    background-color: black;
+}
+p {
+    font-size: 20px;
+}
 ul {
     display: grid;
 
@@ -21,28 +35,33 @@ ul {
 
 #main_page {
     margin-left: 25vw;
+
     display: flex;
     flex-direction: column;
+
     gap: 5%;
+
     align-items: center;
     justify-content: center;
+
     height: 100vh;
     width: 50vw;
-    background-color: gray;
+
+    border-left: 2px solid white;
+    border-right: 2px solid white;
 }
 
 #screen {
     position: relative;
     height: 100px;
-    background-color: lightgreen;
     width: 90%;
 }
+
 
 #buttons {
     position: relative;
     width: 90%;
     height: 75%;
-    background-color: lightgray;
 }
 
 input[type="button"] {
@@ -56,14 +75,19 @@ input[type="button"] {
     border-radius: 0;
     border: 0;
 
+    background-color: rgb(50, 54, 59);
+
     cursor: pointer;
     text-align: center;
 }
 
-input[type="button"]:hover {
-    background-color: #ccc;
-  }
+input[type="button"]:hover, #big-bttn:hover {
+    filter: brightness(2);
+}
 
-#big-bttn {
-    background-color: darkgray;
+#sign-bttn {
+    background-color: rgb(67, 70, 82);
+}
+#exec-bttn {
+    background-color: rgb(60, 71, 115);
 }
