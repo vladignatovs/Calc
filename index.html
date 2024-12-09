@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- manually created stylesheet and script -->
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
     <title>Calculator</title>
@@ -17,10 +18,10 @@
             <ul>
                 <!-- eachrow contains 4 buttons -->
                 <li>
-                    <input type="button" value="(" onclick="addValue(this)">
+                    <input type="button" value="(" onclick="openBrackets()">
                 </li>
                 <li>
-                    <input type="button" value=")" onclick="addValue(this)">
+                    <input type="button" value=")" onclick="closeBrackets()">
                 </li>
                 <li>
                     <input type="button" value="CE" onclick="clearEntry()">
