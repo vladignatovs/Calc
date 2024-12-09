@@ -2,6 +2,21 @@ var textRow = document.getElementById("textRow");
 var resultRow = document.getElementById("resultRow");
 var insideBrackets = false;
 
+function fillHistory() {
+    var history = JSON.parse(localStorage.getItem("history")) || [];
+    var historyDiv = document.getElementById("history");
+    
+    historyDiv.innerHTML = ''; 
+
+    for(var i = 0; i < history.length; i++) {
+        var p = document.createElement("p");
+        p.innerText = history[i].expression + "=" + history[i].result;
+        historyDiv.appendChild(p);
+    }
+}
+
+fillHistory()
+
 function addValue(button) {
     var text = textRow.innerText;
 
@@ -59,7 +74,10 @@ function execute() {
 
     console.log(expression);
     var result = new Function(`return ${expression}`)();
-    resultRow.innerText = result === undefined ? "" : result;
+    if(!(result === undefined)) {
+        resultRow.innerText = result === undefined ? "" : result;
+        saveHistory(expression, result);
+    }
 }
 
 
@@ -71,4 +89,27 @@ function clearEntry() {
 function allClear() {
     textRow.innerText = "";
     insideBrackets = false;
+    clearHistory()
+}
+
+
+function saveHistory(expression, result) {
+    let history = JSON.parse(localStorage.getItem('history')) || [];
+
+    var newHistoryElement = {
+        expression: expression,
+        result: result
+    };
+
+    history.push(newHistoryElement);
+
+    localStorage.setItem('history', JSON.stringify(history));
+    fillHistory()
+}
+
+function clearHistory() {
+    localStorage.removeItem('history');
+    
+    var historyDiv = document.getElementById('history');
+    historyDiv.innerHTML = ''; 
 }
