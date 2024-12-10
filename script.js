@@ -1,7 +1,27 @@
 var textRow = document.getElementById("textRow");
 var resultRow = document.getElementById("resultRow");
 var insideBrackets = false;
+var insideBracketsCounter = 0;
 
+function deleteHistoryRow(historyRowText) {
+    var enterPosition = historyRowText.lastIndexOf('=');
+    var history = JSON.parse(localStorage.getItem('history')) || [];
+
+    var expression = historyRowText.substring(0, enterPosition).trim();
+    var result = historyRowText.substring(enterPosition + 1).trim();
+    
+    var index = history.findIndex(item => 
+        item.expression === expression && 
+        item.result === Number(result)
+    );
+
+    if (index !== -1) {
+        history.splice(index, 1);
+
+        localStorage.setItem('history', JSON.stringify(history));
+        fillHistory();
+    }
+}
 function fillHistory() {
     var history = JSON.parse(localStorage.getItem("history")) || [];
     var historyDiv = document.getElementById("history");
@@ -9,9 +29,32 @@ function fillHistory() {
     historyDiv.innerHTML = ''; 
 
     for(var i = 0; i < history.length; i++) {
+        var div = document.createElement("div");
+
         var p = document.createElement("p");
         p.innerText = history[i].expression + "=" + history[i].result;
-        historyDiv.appendChild(p);
+        var text = history[i].expression + "=" + history[i].result;
+        var deleteButton = document.createElement("button");
+        deleteButton.addEventListener('click', () => {
+            deleteHistoryRow(text)
+        });
+
+        div.style.display = "flex";
+        div.style.flexDirection = "row";
+        div.style.gap = "5px";
+
+        deleteButton.style.width = "20px";
+        deleteButton.style.height = "20px";
+        deleteButton.style.backgroundColor = "red"; 
+        deleteButton.style.color = "white";
+        deleteButton.style.borderRadius = "10px";
+        deleteButton.style.border = "none";
+        deleteButton.style.cursor = "pointer";
+
+        div.appendChild(p);
+        div.appendChild(deleteButton);
+
+        historyDiv.appendChild(div);
     }
 }
 
@@ -30,9 +73,11 @@ function addValue(button) {
         var lastSymbolBeforeBracket = text[lastBracketPosition - 1];
         // if lastSymbol is not a number and button value is not a number, then replace last symbol
         if(lastSymbolBeforeBracket != '(' && isNaN(lastSymbolBeforeBracket) && (isNaN(button.value))) {
-            textRow.innerText = text.slice(0, lastBracketPosition - 1) + button.value + text.slice(lastBracketPosition)
+            // textRow.innerText = text.slice(0, lastBracketPosition - 1) + button.value + text.slice(lastBracketPosition)
+            textRow.innerText = text.slice(0, -insideBracketsCounter) + button.value + text.slice(-insideBracketsCounter);
         } else {
-            textRow.innerText = text.slice(0, lastBracketPosition) + button.value + text.slice(lastBracketPosition);
+            // textRow.innerText = text.slice(0, lastBracketPosition) + button.value + text.slice(lastBracketPosition);
+            textRow.innerText = text.slice(0, -insideBracketsCounter) + button.value + text.slice(-insideBracketsCounter)
         }
     } else {
         var lastSymbol = text[text.length - 1];
@@ -45,15 +90,30 @@ function addValue(button) {
 } 
 
 function openBrackets() {
-    textRow.innerText += '()';
-    insideBrackets = true;
+    var text = textRow.innerText;
+
+    if(insideBracketsCounter === 0) {
+        textRow.innerText += '()';
+        insideBrackets = true;
+    } else {
+        textRow.innerText = text.slice(0, -insideBracketsCounter) + '()' + text.slice(-insideBracketsCounter);
+    }
+
+    insideBracketsCounter++;
+    console.log(insideBracketsCounter);
 }
 function closeBrackets() {
-    insideBrackets = false;
+    if(insideBrackets) {
+        insideBracketsCounter--;
+        if(insideBracketsCounter === 0) {
+            insideBrackets = false;
+        }
+    }
 }
 function execute() {
     var expression = textRow.innerText;
-    if(isNaN(expression[expression.length - 1])) {
+    var expressionLastSymbol = expression[expression.length - 1];
+    if(isNaN(expressionLastSymbol) && expressionLastSymbol != '(' && expressionLastSymbol != ')') {
         return;
     }
 
@@ -83,12 +143,19 @@ function execute() {
 
 function clearEntry() {
     textRow.innerText = "";
+    resultRow.innerText = '';
+
     insideBrackets = false;
+    insideBracketsCounter = 0 ;
 }
 
 function allClear() {
     textRow.innerText = "";
+    resultRow.innerText = '';
+
     insideBrackets = false;
+    insideBracketsCounter = 0 ;
+
     clearHistory()
 }
 
